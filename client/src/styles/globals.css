@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .input-style {
+    @apply border border-gray-400 outline-none rounded-md p-2 w-full min-w-[320px];
+  }
+
+  .input-style:focus {
+    @apply border border-black duration-300;
+  }
+
+  .input-style::placeholder {
+    @apply text-gray-700;
+  }
+}
+
+.height-100vh {
+  height: calc(100vh - 144px);
+}
