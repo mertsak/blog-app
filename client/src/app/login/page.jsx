@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const router = useRouter();
@@ -12,29 +12,18 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .post(
-        "http://localhost:3002/login",
-        { username, password },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          toast.success(
-            "başarıyla giriş yaptınız ana sayfaya yönlendiriliyorsunuz"
-          );
-        }
-        setUsername("");
-        setPassword("");
+    signIn("credentials", {
+      username,
+      password,
+      redirect: false,
+    }).then((res) => {
+      if (res.error) {
+        toast.error("kullanıcı adı veya şifre hatalı");
+      } else {
+        toast.success("giriş işlemi başarılı anasayfaya yönlendirildiniz");
         router.push("/");
-      })
-      .catch((err) => {
-        if (err) {
-          toast.error(err.response.data.msg);
-        }
-      });
+      }
+    });
   };
 
   return (

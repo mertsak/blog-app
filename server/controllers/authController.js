@@ -72,12 +72,10 @@ const login = async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-    });
-
     res.status(200).json({
       msg: "login başarılı",
+      user,
+      token,
     });
   } catch (error) {
     res.status(500).json({
