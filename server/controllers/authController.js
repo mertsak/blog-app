@@ -6,6 +6,32 @@ const register = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    const user = await Auth.findOne({ username });
+
+    if (username === "" || password === "") {
+      return res.status(400).json({
+        msg: "kullanıcı adı veya şifre boş olamaz",
+      });
+    }
+
+    if (user) {
+      return res.status(400).json({
+        msg: "kullanıcı adı zaten kullanılıyor lütfen başka bir kullanıcı adı seçin veya giriş yapın",
+      });
+    }
+
+    if (username.length < 3) {
+      return res.status(400).json({
+        msg: "kullanıcı adı 3 karakterden az olamaz",
+      });
+    }
+
+    if (username.length > 20) {
+      return res.status(400).json({
+        msg: "kullanıcı adı 20 karakterden fazla olamaz",
+      });
+    }
+
     const passwordHash = await bcrypt.hash(password, 12);
 
     const newUser = await Auth.create({ username, password: passwordHash });
@@ -22,9 +48,15 @@ const login = async (req, res) => {
 
     const user = await Auth.findOne({ username });
 
+    if (username === "" || password === "") {
+      return res.status(400).json({
+        msg: "kullanıcı adı veya şifre boş olamaz",
+      });
+    }
+
     if (!user) {
       return res.status(400).json({
-        msg: "kullanıcı bulunamadı",
+        msg: "kullanıcı adı bulunamadı lütfen kayıt olun",
       });
     }
 
@@ -32,7 +64,7 @@ const login = async (req, res) => {
 
     if (!isMatch) {
       return res.status(400).json({
-        msg: "yanlış şifre",
+        msg: "kullanıcı adı ve şifre eşleşmiyor",
       });
     }
 

@@ -1,8 +1,11 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,12 +15,17 @@ const Register = () => {
       .post("http://localhost:3002/register", { username, password })
       .then((res) => {
         if (res.status === 201) {
-          alert("REGISTERED");
+          toast.success(
+            "başarıyla kayıt oldunuz giriş sayfasına yönlendiriliyorsunuz"
+          );
         }
+        setUsername("");
+        setPassword("");
+        router.push("/login");
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          alert("DONT REGISTER");
+        if (err) {
+          toast.error(err.response.data.msg);
         }
       });
   };

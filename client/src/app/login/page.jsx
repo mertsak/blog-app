@@ -1,8 +1,11 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,10 +21,19 @@ const Login = () => {
         }
       )
       .then((res) => {
-        alert(res.data.msg);
+        if (res.status === 200) {
+          toast.success(
+            "başarıyla giriş yaptınız ana sayfaya yönlendiriliyorsunuz"
+          );
+        }
+        setUsername("");
+        setPassword("");
+        router.push("/");
       })
       .catch((err) => {
-        console.log(err);
+        if (err) {
+          toast.error(err.response.data.msg);
+        }
       });
   };
 
