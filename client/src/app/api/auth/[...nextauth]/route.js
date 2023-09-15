@@ -20,16 +20,33 @@ export const authOptions = {
         });
         const user = await res.json();
 
-        // If no error and we have user data, return it
         if (res.ok && user) {
           return user;
         }
-        // Return null if user data could not be retrieved
+
         return null;
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    session: async ({ session, token }) => {
+      session._id = token._id;
+      session.token = token.token;
+      session.username = token.username;
+      session.user = token.user;
+      return Promise.resolve(session);
+    },
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token._id = user._id;
+        token.token = user.token;
+        token.username = user.username;
+        token.user = user.user;
+      }
+      return Promise.resolve(token);
+    },
+  },
 };
 
 const handler = nextAuth(authOptions);

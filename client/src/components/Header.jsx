@@ -12,8 +12,16 @@ const Header = () => {
       </Link>
 
       {status === "authenticated" ? (
-        <div className="cursor-pointer" onClick={() => signOut()}>
-          Sign Out
+        <div className="flex justify-center items-center gap-6">
+          <div className="font-bold">{session.user.username}</div>
+
+          <div className="font-bold">
+            <Link href="/createPost">Create New Post</Link>
+          </div>
+
+          <div className="cursor-pointer" onClick={() => signOut()}>
+            Sign Out
+          </div>
         </div>
       ) : (
         <nav className="flex justify-center items-center space-x-8 text-lg">

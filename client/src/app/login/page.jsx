@@ -18,7 +18,7 @@ const Login = () => {
       redirect: false,
     }).then((res) => {
       if (res.error) {
-        toast.error("kullanıcı adı veya şifre hatalı");
+        toast.error("lütfen önce kayıt olunuz");
       } else {
         toast.success("giriş işlemi başarılı anasayfaya yönlendirildiniz");
         router.push("/");
