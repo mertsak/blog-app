@@ -9,9 +9,6 @@ export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  console.log(session);
-  console.log(status);
-
   useEffect(() => {
     if (status === "loading") {
       // Oturum yükleniyor, bekleyin.
