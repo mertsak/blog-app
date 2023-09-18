@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const Register = () => {
   const router = useRouter();
@@ -54,6 +55,15 @@ const Register = () => {
         <button className="bg-white px-4 py-2 rounded-md hover:bg-black hover:text-white duration-300">
           Register
         </button>
+
+        <span>
+          <Link
+            href="/login"
+            className="text-red-500 hover:text-red-800 duration-300 text-sm"
+          >
+            hesabınız varsa lütfen giriş yapınız
+          </Link>
+        </span>
       </form>
     </div>
   );

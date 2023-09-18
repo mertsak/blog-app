@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const Login = () => {
   const router = useRouter();
@@ -50,6 +51,15 @@ const Login = () => {
         <button className="bg-white px-4 py-2 rounded-md hover:bg-black hover:text-white duration-300">
           Login
         </button>
+
+        <span>
+          <Link
+            href="/register"
+            className="text-red-500 hover:text-red-800 duration-300 text-sm"
+          >
+            hesabınız yoksa lütfen kayıt olunuz
+          </Link>
+        </span>
       </form>
     </div>
   );
